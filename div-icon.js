@@ -1,7 +1,7 @@
-import React, {Component, Children} from 'react';
+import React, {Component} from 'react';
 import {render} from 'react-dom';
 import {DivIcon, marker} from 'leaflet';
-import {MapLayer} from 'react-leaflet';
+import {MapLayer, withLeaflet} from 'react-leaflet';
 import PropTypes from 'prop-types';
 
 function createContextProvider(context) {
@@ -22,15 +22,15 @@ function createContextProvider(context) {
   return ContextProvider;
 }
 
-export default class Divicon extends MapLayer {
+export class Divicon extends MapLayer {
   static propTypes = {
     opacity: PropTypes.number,
     zIndexOffset: PropTypes.number,
-  };
+  }
 
   static childContextTypes = {
     popupContainer: PropTypes.object,
-  };
+  }
 
   getChildContext() {
     return {
@@ -65,11 +65,6 @@ export default class Divicon extends MapLayer {
     }
   }
 
-  componentWillMount() {
-    super.componentWillMount();
-    this.leafletElement = this.createLeafletElement(this.props);
-  }
-
   componentDidMount() {
     super.componentDidMount();
     this.renderComponent();
@@ -99,6 +94,6 @@ export default class Divicon extends MapLayer {
   render() {
     return null;
   }
-
 }
 
+export default withLeaflet(Divicon)
